@@ -32,7 +32,6 @@ Deploy the selected characters and run the `CODE` saved at main slot.
 ```env
 EMAIL=your_account_email
 PASSWORD=your_account_password
-<!-- Uncomment to playwright's debug info -->
 # DEBUG=pw:api
 CHARACTERS="CharacterName CharacterName"
 ```
