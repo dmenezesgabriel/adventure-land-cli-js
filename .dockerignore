@@ -1,0 +1,10 @@
+# Environment Variables
+.env
+
+# Docker
+*Dockerfile*
+*docker-compose*
+
+# Folders
+.git
+
