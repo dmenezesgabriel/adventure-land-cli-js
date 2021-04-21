@@ -1,0 +1,13 @@
+version: "3"
+services:
+  playwright-emulator:
+    build:
+      context: ./services/playwright_emulator
+      dockerfile: ${DOCKER_FILE:-Dockerfile}
+    stdin_open: true # docker run -i
+    tty: true # docker run -t
+    command: /bin/sh
+    volumes:
+      - ./cli:/usr/src/app
+    env_file:
+      - ./.env

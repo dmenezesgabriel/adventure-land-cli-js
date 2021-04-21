@@ -1,11 +1,8 @@
-build:
-	time docker-compose build
+build-%:
+	time docker-compose -f docker-compose-$(*).yml build
 
-run-sh:
-	docker-compose run --rm adventure-cli /bin/sh
+run-%:
+	docker-compose -f docker-compose-$(*).yml run --rm $(*) npm run main
 
-run:
-	docker-compose run --rm adventure-cli npm run main
-
-emulator:
-	docker-compose run --rm adventure-cli npm run emulator
+down-%:
+	docker-compose -f docker-compose-$(*).yml down

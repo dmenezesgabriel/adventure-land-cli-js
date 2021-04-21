@@ -12,18 +12,17 @@ Adventure Lands characters automation via command line interface.
 
 **build**:
 
+services:
+
+- playwright-emulator
+- puppetter-emulator
+- socket-client :warning: _under development_
+
 ```sh
-make build
+make build-<service name>
 ```
 
-### Socket client
-
-| :warning: WARNING |
-| :---------------- |
-
-Under construction
-
-### Browser emulator
+### Browser emulators
 
 Deploy the selected characters and run the `CODE` saved at main slot.
 
@@ -44,7 +43,7 @@ CHARACTERS="CharacterName CharacterName"
 2. **run**:
 
 ```sh
-make emulator
+make run-<service-name>
 ```
 
 ## Related links

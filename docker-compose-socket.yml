@@ -1,8 +1,8 @@
 version: "3"
 services:
-  adventure-cli:
+  socket-client:
     build:
-      context: ./cli
+      context: ./services/sockert_client
       dockerfile: ${DOCKER_FILE:-Dockerfile}
     stdin_open: true # docker run -i
     tty: true # docker run -t
