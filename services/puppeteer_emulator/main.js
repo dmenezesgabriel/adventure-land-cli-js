@@ -23,6 +23,11 @@ async function sleep(seconds) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
+//  Log page logs
+async function logPageConsole(page) {
+  page.on("console", (msg) => logger.info(`Game log: ${msg.text()}`));
+}
+
 // Deploy character
 async function main() {
   logger.info(`Starting`);
@@ -83,7 +88,6 @@ async function main() {
       });
     }
   }
-  console.log(`Characters: ${characters}`);
 
   // Run
   logger.info(`Deploy each character`);
@@ -94,6 +98,7 @@ async function main() {
     await sleep(5);
     await page.evaluate(char.loginJS); // select character
     await sleep(5);
+    await logPageConsole(page);
     logger.info(`Escape`);
     await page.keyboard.press("Escape"); // close menu
     await sleep(1);
