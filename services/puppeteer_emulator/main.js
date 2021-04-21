@@ -17,7 +17,7 @@ await user.getSession();
 await user.getCharacters();
 
 //  Sleep for x seconds
-function sleep(seconds) {
+async function sleep(seconds) {
   logger.info(`Sleeping for ${seconds} seconds`);
   const ms = seconds * 1000;
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -99,7 +99,6 @@ async function main() {
     await sleep(1);
     logger.info(`Backslash - Running CODE`);
     await page.keyboard.press("Backslash"); // run code
-    // await sleep(3600);
   }
 }
 
