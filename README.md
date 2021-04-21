@@ -14,8 +14,8 @@ Adventure Lands characters automation via command line interface.
 
 services:
 
-- playwright-emulator
-- puppetter-emulator
+- puppetter-emulator :rocket: _Good to go!_
+- playwright-emulator :warning: _under development_
 - socket-client :warning: _under development_
 
 ```sh
