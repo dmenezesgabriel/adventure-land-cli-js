@@ -5,6 +5,8 @@ import logger from "./src/logger.js";
 
 dotenv.config();
 
+const baseUrl = "https://adventure.land/";
+
 const EMAIL = process.env.EMAIL;
 const PASSWORD = process.env.PASSWORD;
 const CHARACTERS = process.env.CHARACTERS.split(" ");
@@ -17,6 +19,7 @@ await user.getCharacters();
 // Deploy character
 async function runCharacter(targetCharacterId, targetCharacterName) {
   logger.info(`Starting ${targetCharacterName}`);
+  //  Set browser
   const browser = await puppeteer.launch({
     headless: true,
     args: [
@@ -28,14 +31,15 @@ async function runCharacter(targetCharacterId, targetCharacterName) {
       "--disable-dev-shm-usage",
     ],
   });
+  // Create Incognito Browser context
   const context = await browser.createIncognitoBrowserContext();
 
   //
-  // Auth
+  // Login
   //
-  logger.info(`${targetCharacterName} - Auth`);
+  logger.info(`${targetCharacterName} - Go to`);
   const page = await context.newPage();
-  await page.goto("https://adventure.land/");
+  await page.goto(baseUrl);
   logger.info("Sleeping...");
   await sleep(5);
   logger.info(`${targetCharacterName} - Click login`);
@@ -72,7 +76,7 @@ async function runCharacter(targetCharacterId, targetCharacterName) {
   logger.info(`${targetCharacterName} - Login`);
   for (const char of characters) {
     const page = await context.newPage();
-    await page.goto("https://adventure.land/");
+    await page.goto(baseUrl);
     logger.info("Sleeping...");
     await sleep(5);
     await page.evaluate(char.loginJS); // select character
