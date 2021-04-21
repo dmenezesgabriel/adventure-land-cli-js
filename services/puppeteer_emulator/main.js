@@ -1,3 +1,4 @@
+import puppeteer from "puppeteer";
 import dotenv from "dotenv";
 import User from "./src/user.js";
 import logger from "./src/logger.js";
@@ -16,12 +17,18 @@ await user.getCharacters();
 // Deploy character
 async function runCharacter(targetCharacterId, targetCharacterName) {
   logger.info(`Starting ${targetCharacterName}`);
-  const opts = {
-    // change here
+  const browser = await puppeteer.launch({
     headless: true,
-  };
-  const browser = await chromium.launch(opts);
-  const context = await browser.newContext();
+    args: [
+      // Required for Docker version of Puppeteer
+      "--no-sandbox",
+      "--disable-setuid-sandbox",
+      // This will write shared memory files into /tmp instead of /dev/shm,
+      // because Docker’s default for /dev/shm is 64MB
+      "--disable-dev-shm-usage",
+    ],
+  });
+  const context = await browser.createIncognitoBrowserContext();
 
   //
   // Auth
@@ -37,8 +44,8 @@ async function runCharacter(targetCharacterId, targetCharacterName) {
   );
   logger.info("Sleeping...");
   await sleep(2);
-  await page.fill("#email2", EMAIL);
-  await page.fill("#password2", PASSWORD);
+  await page.type("#email2", EMAIL);
+  await page.type("#password2", PASSWORD);
   await page.evaluate(
     "api_call_l('signup_or_login',{email:$('#email2').val(),password:$('#password2').val(),only_login:true},{disable:$(this)})"
   );
@@ -72,11 +79,11 @@ async function runCharacter(targetCharacterId, targetCharacterName) {
     logger.info("Sleeping...");
     await sleep(5);
     logger.info(`${targetCharacterName} - Escape`);
-    await page.press("body", "Escape"); // close menu
+    await page.keyboard.press("Escape"); // close menu
     logger.info("Sleeping...");
     await sleep(1);
     logger.info(`${targetCharacterName} - Backslash - Running CODE`);
-    await page.press("body", "Backslash"); // run code
+    await page.keyboard.press("Backslash"); // run code
     logger.info("Sleeping...");
     await sleep(3600);
   }

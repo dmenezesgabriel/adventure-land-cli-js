@@ -1,13 +1,13 @@
 version: "3"
 services:
-  puppetter-emulator:
+  puppeteer-emulator:
     build:
-      context: ./services/puppetter_emulator
+      context: ./services/puppeteer_emulator
       dockerfile: ${DOCKER_FILE:-Dockerfile}
     stdin_open: true # docker run -i
     tty: true # docker run -t
     command: /bin/sh
     volumes:
-      - ./services/puppetter_emulator:/usr/src/app
+      - ./services/puppeteer_emulator:/usr/src/app
     env_file:
       - ./.env
