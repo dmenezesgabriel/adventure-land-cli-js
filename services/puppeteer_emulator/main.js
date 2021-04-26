@@ -8,6 +8,7 @@ dotenv.config();
 
 const baseUrl = "https://adventure.land/";
 
+const HEADLESS = process.env.HEADLESS;
 const EMAIL = process.env.EMAIL;
 const PASSWORD = process.env.PASSWORD;
 const TARGET_SERVER_IDENTIFICATOR = process.env.TARGET_SERVER_IDENTIFICATOR;
@@ -44,7 +45,7 @@ async function main() {
   //  Set browser
   const browser = await puppeteer.launch({
     // Set to run without a graphic interface
-    headless: true,
+    headless: HEADLESS,
     args: [
       // Required for Docker version of Puppeteer
       "--no-sandbox",
