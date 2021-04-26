@@ -14,18 +14,6 @@ const PASSWORD = process.env.PASSWORD;
 const TARGET_SERVER_IDENTIFICATOR = process.env.TARGET_SERVER_IDENTIFICATOR;
 const CHARACTERS = process.env.CHARACTERS.split(" ");
 
-let user = new User(EMAIL, PASSWORD);
-
-logger.info("Getting session");
-await user.getSession();
-await user.getCharacters();
-
-logger.info("Getting servers");
-let game = new Game(user.sessionCookie, user.userId);
-await game.getServers();
-
-const targetServer = game.servers[TARGET_SERVER_IDENTIFICATOR];
-
 //  Sleep for x seconds
 async function sleep(seconds) {
   logger.info(`Sleeping for ${seconds} seconds`);
@@ -38,9 +26,9 @@ async function logPageConsole(page) {
   page.on("console", (msg) => logger.info(`Game log: ${msg.text()}`));
 }
 
-// Deploy character
-async function main() {
-  logger.info(`Starting`);
+// Open browser
+async function makeBrowserContext() {
+  logger.info("Creating browser context");
 
   //  Set browser
   const browser = await puppeteer.launch({
@@ -57,9 +45,11 @@ async function main() {
   });
 
   // Create Incognito Browser context
-  const context = await browser.createIncognitoBrowserContext();
+  return await browser.createIncognitoBrowserContext();
+}
 
-  // Login
+// Login at browser client
+async function login(context, email = EMAIL, password = PASSWORD) {
   const page = await context.newPage();
   logger.info(`Go to ${baseUrl}`);
   await page.goto(baseUrl);
@@ -69,20 +59,35 @@ async function main() {
   );
   await sleep(2);
   logger.info(`Fill credentials`);
-  await page.type("#email2", EMAIL);
-  await page.type("#password2", PASSWORD);
+  await page.type("#email2", email);
+  await page.type("#password2", password);
   logger.info(`Click login`);
-  await page.screenshot({ path: "/usr/src/app/login.png" });
   await page.evaluate(
     "api_call_l('signup_or_login',{email:$('#email2').val(),password:$('#password2').val(),only_login:true},{disable:$(this)})"
   );
-  await sleep(2);
-
   //  Close the page
-  (async () => {
-    await sleep(5);
-    page.close();
-  })();
+  await sleep(6);
+  page.close();
+}
+
+//  Run
+async function main() {
+  logger.info(`Starting`);
+  // Instantiate a user to authenticate
+  let user = new User(EMAIL, PASSWORD);
+
+  logger.info("Getting session");
+  await user.getSession();
+  await user.getCharacters();
+
+  logger.info("Getting servers");
+  let game = new Game(user.sessionCookie, user.userId);
+  await game.getServers();
+
+  const targetServer = game.servers[TARGET_SERVER_IDENTIFICATOR];
+
+  const context = await makeBrowserContext();
+  await login(context);
 
   let characters = [];
   for (let character in user.characters) {
@@ -100,20 +105,18 @@ async function main() {
     }
   }
 
-  // Run
+  // Deploy
   logger.info(`Deploy each character`);
   for (const char of characters) {
     logger.info(`Starting - ${char.name}`);
     const page = await context.newPage();
     await page.goto(baseUrl);
     await sleep(5);
+    // Connect to target server
     await page.evaluate(
       `server_addr='${targetServer.addr}'; server_port='${targetServer.port}'; init_socket();`
     );
     await sleep(5);
-    await page.screenshot({
-      path: "/usr/src/app/before_select_char.png",
-    });
     await page.evaluate(char.loginJS); // select character
     await sleep(5);
     await logPageConsole(page);
