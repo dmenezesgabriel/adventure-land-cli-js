@@ -26,7 +26,7 @@ async function makeBrowserContext(headless) {
   });
 
   // Create Incognito Browser context
-  return await browser.createIncognitoBrowserContext();
+  return browser.createIncognitoBrowserContext();
 }
 
 async function selectCharacters(user, selected_characters) {
