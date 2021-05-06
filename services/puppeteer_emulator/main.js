@@ -33,25 +33,25 @@ async function main() {
   // Post CODE to slot
   await user.postCode(MAIN_CODE_PATH, 1, "main_code");
 
-  logger.info("Getting servers");
-  let game = new Game(user.sessionCookie, user.userId);
-  await game.getServers();
+  // logger.info("Getting servers");
+  // let game = new Game(user.sessionCookie, user.userId);
+  // await game.getServers();
 
-  // Chose server to connect
-  const targetServer = game.servers[TARGET_SERVER_IDENTIFICATOR];
+  // // Chose server to connect
+  // const targetServer = game.servers[TARGET_SERVER_IDENTIFICATOR];
 
-  // Create browser context
-  const context = await makeBrowserContext(HEADLESS);
-  await login(context, baseUrl, EMAIL, PASSWORD);
+  // // Create browser context
+  // const context = await makeBrowserContext(HEADLESS);
+  // await login(context, baseUrl, EMAIL, PASSWORD);
 
-  // Select characters to deploy
-  const characters = await selectCharacters(user, CHARACTERS);
+  // // Select characters to deploy
+  // const characters = await selectCharacters(user, CHARACTERS);
 
-  // Deploy
-  logger.info(`Deploy each character`);
-  for (const char of characters) {
-    await startCharacter(context, baseUrl, char, targetServer);
-  }
+  // // Deploy
+  // logger.info(`Deploy each character`);
+  // for (const char of characters) {
+  //   await startCharacter(context, baseUrl, char, targetServer);
+  // }
 }
 
 await main();

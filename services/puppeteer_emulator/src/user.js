@@ -84,7 +84,10 @@ export default class User {
       slot: slot_number,
       name: save_name,
       log: "1",
+      auto: true,
+      electron: true,
     });
+    // Post code
     const postCodeResponse = await httpWrapper.post(
       "save_code",
       `method=save_code&arguments=${encodeURIComponent(args)}`,
@@ -97,7 +100,6 @@ export default class User {
     );
     if (postCodeResponse.status == 200) {
       logger.info("Posted code successfully");
-      logger.info(postCodeResponse.data.name);
       return Promise.resolve(true);
     } else {
       logger.error(`Error at post code: ${postCodeResponse}`);
