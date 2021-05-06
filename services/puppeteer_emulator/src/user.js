@@ -1,7 +1,7 @@
 import httpWrapper from "./httpWrapper.js";
 import logger from "./logger.js";
+import fs from "fs";
 
-// Auth
 export default class User {
   constructor(email, password) {
     this.email = email;
@@ -77,5 +77,30 @@ export default class User {
     return Promisse.reject("Error fetching characters");
   }
 
-  async postCode() {}
+  async postCode(file_path, save_slot, save_name) {
+    // https://discord.com/channels/238332476743745536/243707345887166465/655122991541387294
+    const code = fs.readFileSync(file_path);
+    let arguments = JSON.stringify({
+      slot: save_slot.toString(),
+      code: code.toString(),
+      name: save_name,
+      log: "0",
+    });
+    const postCodeResponse = await httpWrapper.post(
+      "save_code",
+      `method=save_code&arguments=${arguments}`,
+      {
+        headers: {
+          cookie: `auth=${this.userId}-${this.sessionCookie}`,
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      }
+    );
+    if (postCodeResponse.status == 200) {
+      logger.info("Posted code successfully");
+      return Promise.resolve(true);
+    } else {
+      logger.error(`Error at post code: ${postCodeResponse}`);
+    }
+  }
 }
