@@ -58,12 +58,12 @@ async function startCharacter(context, base_url, character, targetServer) {
     `server_addr='${targetServer.addr}'; server_port='${targetServer.port}'; init_socket();`
   );
   await sleep(5);
-  // Load CODE slot
-  await page.evaluate(`load_code("1",1);`);
-  await sleep(5);
   await page.evaluate(character.loginJS); // login character
   await sleep(5);
   await logPageConsole(page);
+  // Load CODE slot
+  await page.evaluate(`load_code("1",1);`);
+  await sleep(5);
   logger.info(`Escape`);
   await page.keyboard.press("Escape"); // close menu
   await sleep(1);

@@ -84,8 +84,6 @@ export default class User {
       slot: slot_number,
       name: save_name,
       log: "1",
-      auto: true,
-      electron: true,
     });
     // Post code
     const postCodeResponse = await httpWrapper.post(
