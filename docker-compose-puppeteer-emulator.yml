@@ -9,5 +9,6 @@ services:
     command: /bin/sh
     volumes:
       - ./services/puppeteer_emulator:/usr/src/app
+      - ./CODE:/usr/src/app/CODE
     env_file:
       - ./.env

@@ -4,3 +4,5 @@ npm-debug.log
 *.log
 temp.js
 *.png
+CODE/*
+!code.placeholder
