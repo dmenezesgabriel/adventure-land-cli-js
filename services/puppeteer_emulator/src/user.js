@@ -77,18 +77,17 @@ export default class User {
     return Promisse.reject("Error fetching characters");
   }
 
-  async postCode(file_path, save_slot, save_name) {
-    // https://discord.com/channels/238332476743745536/243707345887166465/655122991541387294
+  async postCode(file_path, slot_number, save_name) {
     const code = fs.readFileSync(file_path);
-    let arguments = JSON.stringify({
-      slot: save_slot.toString(),
+    const args = JSON.stringify({
       code: code.toString(),
+      slot: slot_number,
       name: save_name,
-      log: "0",
+      log: "1",
     });
     const postCodeResponse = await httpWrapper.post(
       "save_code",
-      `method=save_code&arguments=${arguments}`,
+      `method=save_code&arguments=${encodeURIComponent(args)}`,
       {
         headers: {
           cookie: `auth=${this.userId}-${this.sessionCookie}`,
@@ -98,9 +97,13 @@ export default class User {
     );
     if (postCodeResponse.status == 200) {
       logger.info("Posted code successfully");
+      console.log(encodeURI(args));
+
+      console.log(postCodeResponse.data);
       return Promise.resolve(true);
     } else {
       logger.error(`Error at post code: ${postCodeResponse}`);
     }
+    return Promisse.reject("Error posting code");
   }
 }

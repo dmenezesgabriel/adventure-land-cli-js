@@ -80,6 +80,9 @@ async function main() {
   await user.getSession();
   await user.getCharacters();
 
+  // Post CODE to slot
+  // await user.postCode("/usr/src/app/CODE/test.js", 1, "test_code");
+
   logger.info("Getting servers");
   let game = new Game(user.sessionCookie, user.userId);
   await game.getServers();

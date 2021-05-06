@@ -1,6 +1,5 @@
 # Adventure Land CLI
 
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=dmenezesgabriel_adventure-land-cli-js&metric=alert_status)](https://sonarcloud.io/dashboard?id=dmenezesgabriel_adventure-land-cli-js)
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=dmenezesgabriel_adventure-land-cli-js&metric=bugs)](https://sonarcloud.io/dashboard?id=dmenezesgabriel_adventure-land-cli-js)
 [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=dmenezesgabriel_adventure-land-cli-js&metric=code_smells)](https://sonarcloud.io/dashboard?id=dmenezesgabriel_adventure-land-cli-js)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=dmenezesgabriel_adventure-land-cli-js&metric=coverage)](https://sonarcloud.io/dashboard?id=dmenezesgabriel_adventure-land-cli-js)
