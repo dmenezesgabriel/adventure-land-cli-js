@@ -38,10 +38,15 @@ Deploy the selected characters and run the `CODE` saved at main slot.
 1. **Credentials**: Create a `.env` file and place at root folder containing the variables:
 
 ```env
-EMAIL=your_account_email
-PASSWORD=your_account_password
-# DEBUG=pw:api
-CHARACTERS="CharacterName CharacterName"
+LOGIN="your_adventure_land_login"
+PASSWORD="your_adventure_land_password"
+# Server to deploy character ex: EUII
+TARGET_SERVER_IDENTIFICATOR="target_server_identificator"
+# Character names
+CHARACTERS="CharName CharName"
+# CODE path
+MAIN_CODE_PATH="/usr/src/app/CODE/code.js"
+
 ```
 
 | :exclamation: This is very important |

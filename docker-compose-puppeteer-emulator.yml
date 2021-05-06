@@ -8,7 +8,8 @@ services:
     tty: true # docker run -t
     command: /bin/sh
     volumes:
-      - ./services/puppeteer_emulator:/usr/src/app
+      - ./services/puppeteer_emulator/src:/usr/src/app/src
+      - ./services/puppeteer_emulator/main.js:/usr/src/app/main.js
       - ./CODE:/usr/src/app/CODE
     env_file:
       - ./.env

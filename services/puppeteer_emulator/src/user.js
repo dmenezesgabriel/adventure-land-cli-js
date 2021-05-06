@@ -97,9 +97,7 @@ export default class User {
     );
     if (postCodeResponse.status == 200) {
       logger.info("Posted code successfully");
-      console.log(encodeURI(args));
-
-      console.log(postCodeResponse.data);
+      logger.info(postCodeResponse.data.name);
       return Promise.resolve(true);
     } else {
       logger.error(`Error at post code: ${postCodeResponse}`);

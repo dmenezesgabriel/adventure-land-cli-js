@@ -13,6 +13,7 @@ const EMAIL = process.env.EMAIL;
 const PASSWORD = process.env.PASSWORD;
 const TARGET_SERVER_IDENTIFICATOR = process.env.TARGET_SERVER_IDENTIFICATOR;
 const CHARACTERS = process.env.CHARACTERS.split(" ");
+const MAIN_CODE_PATH = process.env.MAIN_CODE_PATH;
 
 //  Sleep for x seconds
 async function sleep(seconds) {
@@ -48,6 +49,49 @@ async function makeBrowserContext() {
   return await browser.createIncognitoBrowserContext();
 }
 
+async function selectCharacters(user) {
+  let characters = [];
+  for (let character in user.characters) {
+    let targetCharacterId = user.characters[character]["id"];
+    let targetCharacterName = user.characters[character]["name"];
+
+    //  Check if character should be deployed
+    if (CHARACTERS.includes(targetCharacterName)) {
+      logger.info(`Deploy`);
+      characters.push({
+        name: `${targetCharacterName}`,
+        // NOTE: the loginJS can be extracted from the DOM of the browser.
+        loginJS: `if(!observe_character('${targetCharacterName}')) log_in(user_id,${targetCharacterId},user_auth)`,
+      });
+    }
+  }
+  return characters;
+}
+
+async function startCharacter(context, character, targetServer) {
+  logger.info(`Starting - ${character.name}`);
+  const page = await context.newPage();
+  await page.goto(baseUrl);
+  await sleep(5);
+  // Connect to target server
+  await page.evaluate(
+    `server_addr='${targetServer.addr}'; server_port='${targetServer.port}'; init_socket();`
+  );
+  await sleep(5);
+  // Load CODE slot
+  await page.evaluate(`load_code("1",1);`);
+  await sleep(5);
+  await page.evaluate(character.loginJS); // login character
+  await sleep(5);
+  await logPageConsole(page);
+  logger.info(`Escape`);
+  await page.keyboard.press("Escape"); // close menu
+  await sleep(1);
+  logger.info(`Backslash - Running CODE`);
+  await page.keyboard.press("Backslash"); // run code
+  await sleep(3);
+}
+
 // Login at browser client
 async function login(context, email = EMAIL, password = PASSWORD) {
   const page = await context.newPage();
@@ -81,53 +125,26 @@ async function main() {
   await user.getCharacters();
 
   // Post CODE to slot
-  // await user.postCode("/usr/src/app/CODE/test.js", 1, "test_code");
+  await user.postCode(MAIN_CODE_PATH, 1, "main_code");
 
   logger.info("Getting servers");
   let game = new Game(user.sessionCookie, user.userId);
   await game.getServers();
 
+  // Chose server to connect
   const targetServer = game.servers[TARGET_SERVER_IDENTIFICATOR];
 
+  // Create browser context
   const context = await makeBrowserContext();
   await login(context);
 
-  let characters = [];
-  for (let character in user.characters) {
-    let targetCharacterId = user.characters[character]["id"];
-    let targetCharacterName = user.characters[character]["name"];
-
-    //  Check if character should be deployed
-    if (CHARACTERS.includes(targetCharacterName)) {
-      logger.info(`Deploy`);
-      characters.push({
-        name: `${targetCharacterName}`,
-        // NOTE: the loginJS can be extracted from the DOM of the browser.
-        loginJS: `if(!observe_character('${targetCharacterName}')) log_in(user_id,${targetCharacterId},user_auth)`,
-      });
-    }
-  }
+  // Select characters to deploy
+  const characters = await selectCharacters(user);
 
   // Deploy
   logger.info(`Deploy each character`);
   for (const char of characters) {
-    logger.info(`Starting - ${char.name}`);
-    const page = await context.newPage();
-    await page.goto(baseUrl);
-    await sleep(5);
-    // Connect to target server
-    await page.evaluate(
-      `server_addr='${targetServer.addr}'; server_port='${targetServer.port}'; init_socket();`
-    );
-    await sleep(5);
-    await page.evaluate(char.loginJS); // select character
-    await sleep(5);
-    await logPageConsole(page);
-    logger.info(`Escape`);
-    await page.keyboard.press("Escape"); // close menu
-    await sleep(1);
-    logger.info(`Backslash - Running CODE`);
-    await page.keyboard.press("Backslash"); // run code
+    await startCharacter(context, char, targetServer);
   }
 }
 
