@@ -4,7 +4,7 @@ import { sleep } from "./utils.js";
 
 //  Log page logs
 async function logPageConsole(page) {
-  page.on("console", (msg) => logger.info(`Game log: ${msg.text()}`));
+  page.on("console", (msg) => logger.info(`Page log: ${msg.text()}`));
 }
 
 // Open browser
