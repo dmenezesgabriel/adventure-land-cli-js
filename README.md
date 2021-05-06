@@ -1,23 +1,14 @@
 # Adventure Land CLI
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=dmenezesgabriel_adventure-land-cli-js&metric=alert_status)](https://sonarcloud.io/dashboard?id=dmenezesgabriel_adventure-land-cli-js)
-
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=dmenezesgabriel_adventure-land-cli-js&metric=bugs)](https://sonarcloud.io/dashboard?id=dmenezesgabriel_adventure-land-cli-js)
-
 [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=dmenezesgabriel_adventure-land-cli-js&metric=code_smells)](https://sonarcloud.io/dashboard?id=dmenezesgabriel_adventure-land-cli-js)
-
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=dmenezesgabriel_adventure-land-cli-js&metric=coverage)](https://sonarcloud.io/dashboard?id=dmenezesgabriel_adventure-land-cli-js)
-
 [![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=dmenezesgabriel_adventure-land-cli-js&metric=duplicated_lines_density)](https://sonarcloud.io/dashboard?id=dmenezesgabriel_adventure-land-cli-js)
-
 [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=dmenezesgabriel_adventure-land-cli-js&metric=ncloc)](https://sonarcloud.io/dashboard?id=dmenezesgabriel_adventure-land-cli-js)
-
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=dmenezesgabriel_adventure-land-cli-js&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=dmenezesgabriel_adventure-land-cli-js)
-
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=dmenezesgabriel_adventure-land-cli-js&metric=alert_status)](https://sonarcloud.io/dashboard?id=dmenezesgabriel_adventure-land-cli-js)
-
 [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=dmenezesgabriel_adventure-land-cli-js&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=dmenezesgabriel_adventure-land-cli-js)
-
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=dmenezesgabriel_adventure-land-cli-js&metric=security_rating)](https://sonarcloud.io/dashboard?id=dmenezesgabriel_adventure-land-cli-js)
 
 Adventure Lands characters automation via command line interface.
