@@ -1,7 +1,7 @@
 import socketio from "socket.io-client";
 import logger from "./logger.js";
 
-export default class EventsListener {
+export default class Connector {
   pingNum = 1;
 
   constructor(serverData) {
