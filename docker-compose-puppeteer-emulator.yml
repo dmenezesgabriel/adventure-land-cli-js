@@ -10,6 +10,8 @@ services:
     volumes:
       - ./services/puppeteer_emulator/src:/usr/src/app/src
       - ./services/puppeteer_emulator/main.js:/usr/src/app/main.js
+      - ./services/puppeteer_emulator/package.json:/usr/src/app/package.json
+      - ./services/puppeteer_emulator/yarn.lock:/usr/src/app/yarn.lock
       - ./CODE:/usr/src/app/CODE
     env_file:
       - ./.env
