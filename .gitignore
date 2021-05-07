@@ -1,8 +1,13 @@
+#  Environment files
 *.env
-node_modules
-npm-debug.log
+#  Logs
 *.log
-temp.js
+# Screenshots
 *.png
+# In game code files
 CODE/*
 !code.placeholder
+# Locally installed node modules
+node_modules/
+# NPM
+npm-debug.log
