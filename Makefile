@@ -1,11 +1,11 @@
-build-%:
-	time docker-compose -f docker-compose-$(*).yml build
+build:
+	time docker-compose build
 
-run-%:
-	docker-compose -f docker-compose-$(*).yml run --rm $(*) yarn run main
+run:
+	docker-compose run --rm bot yarn run main
 
-down-%:
-	docker-compose -f docker-compose-$(*).yml down
+down:
+	docker-compose down
 
-sh-%:
-	docker-compose -f docker-compose-$(*).yml run --rm $(*)
+sh:
+	docker-compose run --rm bot

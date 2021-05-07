@@ -1,0 +1,17 @@
+version: "3"
+services:
+  bot:
+    build:
+      context: .
+      dockerfile: ${DOCKER_FILE:-Dockerfile}
+    stdin_open: true # docker run -i
+    tty: true # docker run -t
+    command: /bin/sh
+    volumes:
+      - ./src:/usr/src/app/src
+      - ./main.js:/usr/src/app/main.js
+      - ./package.json:/usr/src/app/package.json
+      - ./yarn.lock:/usr/src/app/yarn.lock
+      - ./CODE:/usr/src/app/CODE
+    env_file:
+      - ./.env

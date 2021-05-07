@@ -22,20 +22,15 @@ Adventure Lands characters automation via command line interface.
 
 **build**:
 
-services:
-
-- puppetter-emulator :rocket: _Good to go!_
-- socket-client :warning: _under development_
-
 ```sh
-make build-<service name>
+make build
 ```
-
-### Browser emulators
 
 Deploy the selected characters and run the `CODE` saved at main slot.
 
-1. **Credentials**: Create a `.env` file and place at root folder containing the variables:
+1. Add code to _CODE_ folder
+
+2. **Credentials**: Create a `.env` file and place at root folder containing the variables:
 
 ```env
 LOGIN="your_adventure_land_login"
@@ -54,10 +49,10 @@ MAIN_CODE_PATH="/usr/src/app/CODE/code.js"
 
 `CHARACTERS` must be separated by spaces.
 
-2. **run**:
+3. **run**:
 
 ```sh
-make run-<service-name>
+make run
 ```
 
 ## Related links
