@@ -23,7 +23,7 @@ RUN  apt-get update \
 # Install app dependencies
 # Different workdir from copy all to not overwrite installed modules
 COPY package*.json .
-RUN npm install
+RUN yarn install
 
 WORKDIR /usr/src/app
 
